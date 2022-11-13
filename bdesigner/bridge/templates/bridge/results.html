@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    {% load static %}
+    <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
+    <title>Slab Designer</title>
+    <meta name="description" content="Bridge Design." />
+    <style>
+        body {
+            min-height: 100vh;
+            background-image: url("{% static 'bridge.jpg' %}");
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            font-family: sans-serif, serif, Helvetica;
+        }
+        #glass-bg {
+            background: rgba(255,255,255,0.3);
+            width: max-content;
+            backdrop-filter: blur(10px);
+            color: black;
+            border-radius: 10px;
+            box-shadow: 0px 0px 16px 0px rgba(0,0,0,0.5);
+            padding: 25px;
+        }
+
+        a {
+          color: white;
+          padding: 5px;
+          background: rgba(255,255,255,0.07);
+          backdrop-filter: blur(5px);
+          border-radius: 10px;
+          border: 1px solid rgba(255, 255, 255, 0.5);
+          text-decoration: none;
+        }
+
+        a:hover {
+          color: rgb(228, 228, 228);
+          padding: 10px;
+          border: 2px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .center {
+            margin-left: auto;
+            margin-right: auto;
+        }
+        table {
+            width: 40%;
+            text-align: center;
+        }
+        th, td {
+            border-bottom: 1px solid #ddd;
+            padding: 5px;
+        }
+        tr:nth-child(even) {
+            background-color: rgba(255,255,255,0.5);
+        }
+        th {
+            background-color: #ecebeb;
+        }
+    </style>
+  </head>
+  <body>
+      <p>
+          <a href="{% url 'index' %}">&lt;-- back</a>
+      </p>
+    <div style="overflow-x: auto; padding: 10px;">
+    <table id="glass-bg" class="center">
+      <thead>
+        <tr>
+          <th>Slab Design</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Depth, D</td>
+          <td>{{ depth }} mm</td>
+        </tr>
+        <tr>
+          <td>Effective depth, d</td>
+          <td>{{ eff_d }} mm</td>
+        </tr>
+        <tr>
+          <td>Effective span</td>
+          <td>{{ eff_span }} m</td>
+        </tr>
+        <tr>
+          <td>Total dead load</td>
+          <td>{{ total_dead_load }} kN/m<sup>2</sup></td>
+        </tr>
+        <tr>
+          <td>Bending Moment due to dead load</td>
+          <td>{{ dead_load_bm }} kN.m</td>
+        </tr>
+        <tr>
+          <td>Maximum moment due to live load</td>
+          <td>{{ ll_max_M }} kN.m</td>
+        </tr>
+        <tr>
+          <td>Total design bending moment due to live load</td>
+          <td>{{ ll_total_design_bm }} kN.m</td>
+        </tr>
+        <tr>
+          <td>Ultimate moment</td>
+          <td>{{ ultimate_M }} kN.m</td>
+        </tr>
+        <tr>
+          <td>Shear force</td>
+          <td>{{ shear_force }} kN</td>
+        </tr>
+        <tr>
+          <td>Total design shear force</td>
+          <td>{{ total_design_shear }} kN</td>
+        </tr>
+        <tr>
+          <td>Ultimate shear force</td>
+          <td>{{ ultimate_shear }} kN</td>
+        </tr>
+        <tr>
+          <td>Main Steel dia</td>
+          <td>{{ main_st_dia }} mm</td>
+        </tr>
+        <tr>
+          <td>Area of steel provided</td>
+          <td>{{ Ast_provided }} mm<sup>2</sup></td>
+        </tr>
+        <tr>
+          <td>Main steel spacing c/c</td>
+          <td>{{ main_st_S }} mm</td>
+        </tr>
+        <tr>
+          <td>Transverse moment</td>
+          <td>{{ transv_M }} kN.m</td>
+        </tr>
+        <tr>
+          <td>Distribution steel dia</td>
+          <td>{{ dia_st }} mm</td>
+        </tr>
+        <tr>
+          <td>Area of steel reinforcement</td>
+          <td>{{ area_rein }} mm<sup>2</sup></td>
+        </tr>
+        <tr>
+          <td>Distribution steel spacing c/c</td>
+          <td>{{ transv_S }} mm</td>
+        </tr>
+        <tr>
+          <td>Check for Ultimate Flexural Strength</td>
+          {% if flex_check == "Safe" %}
+            <td style="color: green;"><b>Safe</b></td>
+          {% else %}
+            <td style="color: red;"><b>Not Safe</b></td>
+          {% endif %}
+        </tr>
+        <tr>
+          <td>Check for Ultimate Shear Strength</td>
+          {% if shear_check == "Safe" %}
+            <td style="color: green;"><b>Safe</b></td>
+          {% else %}
+            <td style="color: red;"><b>Not Safe</b></td>
+          {% endif %}
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </body>
+</html>
